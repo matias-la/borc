@@ -1,13 +1,13 @@
 {
-  "name": "borc",
+  "name": "@exodus/borc",
   "version": "2.1.0",
   "description": "Encode and parse data in the Concise Binary Object Representation (CBOR) data format (RFC7049).",
   "main": "./src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dignifiedquire/borc.git"
+    "url": "https://github.com/ExodusMovement/borc.git"
   },
-  "homepage": "https://github.com/dignifiedquire/borc.git",
+  "homepage": "https://github.com/ExodusMovement/borc.git",
   "browser": {
     "fs": false
   },
@@ -50,14 +50,15 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "bignumber.js": "^8.0.1",
-    "commander": "^2.15.0",
     "ieee754": "^1.1.8",
-    "iso-url": "~0.4.4",
-    "json-text-sequence": "~0.1.0"
+    "iso-url": "~0.4.4"
   },
   "engines": {
     "node": ">=4"
   },
+  "files": [
+    "src/*.js"
+  ],
   "contributors": [
     "Benjamin Cabé <kartben@gmail.com>",
     "Dan Finlay <542863+danfinlay@users.noreply.github.com>",
