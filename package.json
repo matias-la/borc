@@ -1,25 +1,18 @@
 {
-  "name": "borc",
+  "name": "@exodus/borc",
   "version": "3.0.0",
   "description": "Encode and parse data in the Concise Binary Object Representation (CBOR) data format (RFC7049).",
   "main": "./src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dignifiedquire/borc.git"
+    "url": "https://github.com/ExodusMovement/borc.git"
   },
-  "homepage": "https://github.com/dignifiedquire/borc.git",
+  "homepage": "https://github.com/ExodusMovement/borc.git",
   "browser": {
     "fs": false
   },
-  "bin": {
-    "cbor2comment": "./bin/cbor2comment.js",
-    "cbor2diag": "./bin/cbor2diag.js",
-    "cbor2json": "./bin/cbor2json.js",
-    "json2cbor": "./bin/json2cbor.js"
-  },
   "files": [
-    "src",
-    "dist"
+    "src/*.js"
   ],
   "scripts": {
     "test": "aegir test --files test/**/*.spec.js",
@@ -60,10 +53,8 @@
   "dependencies": {
     "bignumber.js": "^9.0.0",
     "buffer": "^6.0.3",
-    "commander": "^2.15.0",
     "ieee754": "^1.1.13",
     "iso-url": "^1.1.5",
-    "json-text-sequence": "~0.3.0",
     "readable-stream": "^3.6.0"
   },
   "engines": {
