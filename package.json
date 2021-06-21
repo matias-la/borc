@@ -40,14 +40,6 @@
     "name": "Friedel Ziegelmayer",
     "email": "dignifiedquire@gmail.com"
   },
-  "devDependencies": {
-    "aegir": "^33.1.0",
-    "ava": "^3.5.1",
-    "benchmark": "^2.1.0",
-    "budo": "^11.2.0",
-    "cbor": "^7.0.5",
-    "garbage": "0.0.0"
-  },
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
