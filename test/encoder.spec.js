@@ -9,11 +9,11 @@ const cbor = require('../')
 const cases = require('./fixtures/cases')
 const vectors = require('./fixtures/vectors.js')
 
-function testAll (list) {
+function testAll (list, encodeFunc=cbor.encode) {
   list.forEach((c) => {
     it(c[1], () => {
       expect(
-        cbor.encode(c[0]).toString('hex')
+        encodeFunc(c[0]).toString('hex')
       ).to.be.eql(
         cases.toString(c)
       )
@@ -24,6 +24,15 @@ function testAll (list) {
 describe('encoder', () => {
   describe('good', () => testAll(cases.good))
   describe('encode', () => testAll(cases.encodeGood))
+  describe('collapseBigIntegers', () => testAll(cases.collapseBigIntegers, function(o) {
+    const enc = new cbor.Encoder({collapseBigIntegers: true})
+    const ret = enc.pushAny(o)
+    if (!ret) {
+      throw new Error('Failed to encode input')
+    }
+
+    return enc.finalize()
+  }))
   describe('vectors', () => {
     // Test vectors from https://github.com/cbor/test-vectors
     vectors.forEach((v) => {

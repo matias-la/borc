@@ -1014,6 +1014,14 @@ a1                                  # map(1)
 0x81a2627058a06566242b5620a263267b72f562346fa2613066684e5c624d776c345b7034766e46316942327da46125fbbfe3e60da2f1ffef63590a26f4655f76525e58f571393e48454e6f4d5a6355266b6f5e287d52fbbff2537cbedad190`]
 ]
 
+exports.collapseBigIntegers = [
+  [BigInt('0'), '0', '0x00'],
+  [BigInt('1'), '1', '0x01'],
+  [BigInt('-1'), '-1', '0x20'],
+  [BigInt('24'), '24', '0x1818'],
+  [BigInt('-25'), '-25', '0x3818'],
+]
+
 exports.decodeBad = [
   '0x18', // missing the next byte for AI
   '0x1c', // invalid AI

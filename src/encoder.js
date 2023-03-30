@@ -44,6 +44,7 @@ class Encoder {
 
     this.streaming = typeof options.stream === 'function'
     this.onData = options.stream
+    this.collapseBigIntegers = options.collapseBigIntegers
 
     this.semanticTypes = [
       [URL, this._pushUrl],
@@ -276,6 +277,17 @@ class Encoder {
       obj = -obj + BI.MINUS_ONE
       m = MT.NEG_INT
       tag = TAG.NEG_BIGINT
+    }
+
+    if (this.collapseBigIntegers &&
+        (obj <= BI.MAXINT64)) {
+      // Special handiling for 64bits
+      if (obj <= 0xffffffff) {
+        return this._pushInt(Number(obj), m)
+      }
+      return this._pushUInt8((m << 5) | NUMBYTES.EIGHT) &&
+        this._pushUInt32BE(Number(obj / BI.SHIFT32)) &&
+        this._pushUInt32BE(Number(obj % BI.SHIFT32))
     }
 
     //let str = obj.toString(16)
