@@ -39,15 +39,15 @@ class Decoder {
     this._knownTags = Object.assign({
       0: (val) => new Date(val),
       1: (val) => new Date(val * 1000),
-      2: (val) => utils.arrayBufferToBignumber(val),
-      3: (val) => c.NEG_ONE.minus(utils.arrayBufferToBignumber(val)),
+      2: (val) => BigInt(utils.arrayBufferToBignumber(val).toString()),
+      3: (val) => BigInt(c.NEG_ONE.minus(utils.arrayBufferToBignumber(val)).toString()),
       4: (v) => {
         // const v = new Uint8Array(val)
-        return c.TEN.pow(v[0]).times(v[1])
+        throw new Error('decoding decimal fractions not supported')
       },
       5: (v) => {
         // const v = new Uint8Array(val)
-        return c.TWO.pow(v[0]).times(v[1])
+        throw new Error('decoding big floats not supported')
       },
       32: (val) => new URL(val),
       35: (val) => new RegExp(val)
@@ -308,7 +308,7 @@ class Decoder {
     const g = utils.buildInt32(g1, g2)
 
     if (f > c.MAX_SAFE_HIGH) {
-      return c.NEG_ONE.minus(new Bignumber(f).times(c.SHIFT32).plus(g))
+      return BigInt(c.NEG_ONE.minus(new Bignumber(f).times(c.SHIFT32).plus(g)).toString())
     }
 
     return -1 - ((f * c.SHIFT32) + g)

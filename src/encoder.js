@@ -5,6 +5,7 @@ const Bignumber = require('bignumber.js').BigNumber
 
 const utils = require('./utils')
 const constants = require('./constants')
+const BI = constants.BI
 const MT = constants.MT
 const NUMBYTES = constants.NUMBYTES
 const SHIFT32 = constants.SHIFT32
@@ -266,6 +267,26 @@ class Encoder {
     return gen._pushTag(TAG.URI) && gen.pushAny(obj.format())
   }
 
+  // code taken from cbor@8.1.0
+  _pushJSBigint(gen, obj) {
+    let m = MT.POS_INT
+    let tag = TAG.POS_BIGINT
+    // BigInt doesn't have -0
+    if (obj < 0) {
+      obj = -obj + BI.MINUS_ONE
+      m = MT.NEG_INT
+      tag = TAG.NEG_BIGINT
+    }
+
+    //let str = obj.toString(16)
+    let str = BigInt.prototype.toString.call(obj, 16)
+    if (str.length % 2) {
+      str = `0${str}`
+    }
+    const buf = Buffer.from(str, 'hex')
+    return gen._pushTag(tag) && gen._pushBuffer(gen, buf)
+  }
+
   _pushBigint (obj) {
     let tag = TAG.POS_BIGINT
     if (obj.isNegative()) {
@@ -415,7 +436,7 @@ class Encoder {
       case 'URL':
         return this._pushUrl(this, obj)
       case 'BigNumber':
-        return this._pushBigNumber(this, obj)
+        throw new Error('BigNumber is unsupported, use BigInt instead')
       case 'Date':
         return this._pushDate(this, obj)
       case 'RegExp':
@@ -430,6 +451,8 @@ class Encoder {
           default:
             throw new Error('Unknown symbol: ' + obj.toString())
         }
+      case 'BigInt':
+        return this._pushJSBigint(this, obj)
       default:
         throw new Error('Unknown type: ' + typeof obj + ', ' + (obj ? obj.toString() : ''))
     }

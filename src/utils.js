@@ -59,7 +59,7 @@ exports.buildInt64 = (f1, f2, g1, g2) => {
   const g = exports.buildInt32(g1, g2)
 
   if (f > MAX_SAFE_HIGH) {
-    return new Bignumber(f).times(SHIFT32).plus(g)
+    return BigInt(new Bignumber(f).times(SHIFT32).plus(g).toString())
   } else {
     return (f * SHIFT32) + g
   }

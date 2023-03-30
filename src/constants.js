@@ -58,6 +58,14 @@ exports.SYMS = {
 exports.SHIFT32 = Math.pow(2, 32)
 exports.SHIFT16 = Math.pow(2, 16)
 
+exports.BI = {
+  MINUS_ONE: BigInt(-1),
+  NEG_MAX: BigInt(-1) - BigInt(Number.MAX_SAFE_INTEGER),
+  MAXINT32: BigInt('0xffffffff'),
+  MAXINT64: BigInt('0xffffffffffffffff'),
+  SHIFT32: BigInt(exports.SHIFT32),
+}
+
 exports.MAX_SAFE_HIGH = 0x1fffff
 exports.NEG_ONE = new Bignumber(-1)
 exports.TEN = new Bignumber(10)
